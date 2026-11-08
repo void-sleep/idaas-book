@@ -128,7 +128,7 @@ npm run dev          # 启动开发服务器 → http://localhost:1313
 npm run build        # 生产构建 → public/
 ```
 
-需要 Node.js 26 和 Hugo Extended。
+需要 Node.js 26.13.0 LTS、Hugo Extended 0.169.0，以及 Dart Sass（Thulite 3）。
 
 ## 🤝 贡献
 

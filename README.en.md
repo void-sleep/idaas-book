@@ -128,7 +128,7 @@ npm run dev          # start dev server → http://localhost:1313
 npm run build        # production build → public/
 ```
 
-Requires Node.js 26 and Hugo Extended.
+Requires Node.js 26.13.0 LTS, Hugo Extended 0.169.0, and Dart Sass (Thulite 3).
 
 ## 🤝 Contributing
 
