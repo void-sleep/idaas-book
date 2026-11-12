@@ -1,0 +1,12 @@
+---
+title: "第四部分：实现与实践"
+description: "IDaaS 开源平台深度解析与实践指南：Keycloak、CAS、Dex 等方案对比、集成模式与生产部署"
+sidebar:
+  order: 40
+  collapsed: true
+---
+
+
+本部分从理论落地到实践。我们将深度解析 Keycloak 的架构与部署，探讨 Apereo CAS、Dex、Authentik、Casdoor、Zitadel、Logto、Pomerium、Ory（Hydra/Kratos/Keto）、SuperTokens、Hanko、OpenBao 和 oauth2-proxy 的适用场景，对比主流 IDaaS 方案（开源和商业），总结常见的集成模式，并给出生产环境部署的完整指南。另设有 [解决方案博客](/docs/solution-blogs/) 专区，聚焦 Keycloak + oauth2-proxy 等身份网关的实战配置与排错，以及 [Keycloak LDAP/AD 用户联邦](/docs/solution-blogs/keycloak-ldap-ad-federation/) 和 [企业微信/飞书/钉钉 IAM 集成](/docs/solution-blogs/keycloak-wecom-feishu-dingtalk/) 等企业级身份对接方案。
+
+> 如果你正在做 IAM 架构选型，建议先阅读 [IAM 架构设计指南](/docs/advanced-topics/iam-architecture-design/)——从中心化到零信任的完整架构决策树，以及 [开源 IAM 对比与选型指南](/docs/advanced-topics/opensource-iam-comparison/)——Keycloak vs Casdoor vs Zitadel vs Authentik 决策框架与场景推荐，再回来看具体产品对比，效果更好。

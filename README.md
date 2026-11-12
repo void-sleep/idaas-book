@@ -1,171 +1,77 @@
-# IDaaS Book · 企业身份与访问管理实战全书
+# IDaaS Book
 
-> 🧭 *"信任很难，知道该信任谁更难。"*——这本书帮你理清两者。
+登录页好接，身份系统不好做。账号、权限、SSO、会话、审计，每一项都会在生产里单独翻车。
 
-> **最完整的中文企业身份（IAM）技术书。**
-> 从 IAM 基础原理和 OAuth 2.0 / OIDC / SAML 协议深度解读，到 Keycloak、CAS、Dex 生产部署与零信任架构——一条主线贯穿整个身份领域。
->
-> 🇨🇳 全中文撰写 · **[在线阅读 →](https://idaas.xlabs.club)**
+这是一本中文 IDaaS / IAM 技术书。先讲 OAuth 2.0 / OIDC / SAML 为什么这样设计，再落到 Keycloak、CAS、Dex 与 Kubernetes 上能跑的配置。
 
-[![Stars](https://img.shields.io/github/stars/l10178/idaas-book?style=social)](https://github.com/l10178/idaas-book/stargazers)
-[![Deploy](https://img.shields.io/github/actions/workflow/status/l10178/idaas-book/.github%2Fworkflows%2Fgh-pages.yml?label=deploy)](https://github.com/l10178/idaas-book/actions/workflows/gh-pages.yml)
-[![Contributors](https://img.shields.io/github/contributors/l10178/idaas-book)](https://github.com/l10178/idaas-book/graphs/contributors)
-[![Release](https://img.shields.io/github/v/release/l10178/idaas-book)](https://github.com/l10178/idaas-book/releases/latest)
+选型用同一套标准比 Keycloak、CAS、Dex、Casdoor。Passkey、ReBAC、零信任单独成章。
+
+在线阅读：[idaas.xlabs.club](https://idaas.xlabs.club)
+
+[![Deploy](https://img.shields.io/github/actions/workflow/status/void-sleep/idaas-book/.github%2Fworkflows%2Fgh-pages.yml?label=deploy)](https://github.com/void-sleep/idaas-book/actions/workflows/gh-pages.yml)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue)](https://creativecommons.org/licenses/by-nc/4.0/)
 
-**[📖 在线阅读](https://idaas.xlabs.club)** · **[⭐ Star 收藏](https://github.com/l10178/idaas-book/stargazers)** · **[🐛 提交 Issue](https://github.com/l10178/idaas-book/issues)** · **[🔀 Fork 贡献](https://github.com/l10178/idaas-book/forks)**
+- [阅读](#阅读)
+- [构建](#构建)
+- [贡献](#贡献)
+- [许可](#许可)
 
-语言：**简体中文** · [English](README.en.md)
+## 阅读
 
----
+| 章节 | 内容 |
+|------|------|
+| [阅读指南](https://idaas.xlabs.club/docs/guides/) | 路线与约定 |
+| [基础](https://idaas.xlabs.club/docs/fundamentals/) | IDaaS / IAM、AuthN vs AuthZ、生命周期 |
+| [协议与标准](https://idaas.xlabs.club/docs/protocols/) | OAuth 2.0 / 2.1、OIDC、SAML、LDAP、SCIM、JWT |
+| [核心能力](https://idaas.xlabs.club/docs/core-capabilities/) | SSO、MFA、联邦、审计 |
+| [实现与实践](https://idaas.xlabs.club/docs/implementation/) | Keycloak、CAS、Dex 及其他实现、K8s |
+| [Keycloak 实战](https://idaas.xlabs.club/docs/keycloak/) | 部署、主题、安全、排障 |
+| [高级主题](https://idaas.xlabs.club/docs/advanced-topics/) | 授权模型、零信任、多租户、合规 |
+| [解决方案](https://idaas.xlabs.club/docs/solution-blogs/) | 可复现的落地笔记 |
+| [博客](https://idaas.xlabs.club/blog/) | 短文 |
 
-## 为什么读这本书
+按手头的问题进：
 
-身份认证与授权是所有现代系统的控制平面。每个应用都需要登录、权限、SSO 和审计——但大多数团队学习这些协议的方式是零散的文档、过时的博客和从不解释"为什么"的厂商手册。
+| 要做的事 | 从这里读 |
+|----------|----------|
+| 先建立体系 | [阅读指南](https://idaas.xlabs.club/docs/guides/introduction/) → [基础](https://idaas.xlabs.club/docs/fundamentals/) → [协议](https://idaas.xlabs.club/docs/protocols/) |
+| SSO / 协议接入 | [OAuth 2.0](https://idaas.xlabs.club/docs/protocols/oauth2-deep-dive/) → [OIDC](https://idaas.xlabs.club/docs/protocols/openid-connect/) → [SAML](https://idaas.xlabs.club/docs/protocols/saml2/) → [SSO](https://idaas.xlabs.club/docs/core-capabilities/sso-single-sign-on/) → [集成模式](https://idaas.xlabs.club/docs/implementation/integration-patterns/) |
+| 身份平台选型 | [Keycloak 架构](https://idaas.xlabs.club/docs/implementation/keycloak-architecture/) → [CAS](https://idaas.xlabs.club/docs/implementation/cas-apereo/) / [Dex](https://idaas.xlabs.club/docs/implementation/dex-identity/) → [方案对比](https://idaas.xlabs.club/docs/advanced-topics/opensource-iam-comparison/) → [K8s](https://idaas.xlabs.club/docs/implementation/kubernetes-production/) |
+| 权限治理 | [AuthN vs AuthZ](https://idaas.xlabs.club/docs/fundamentals/authentication-vs-authorization/) → [授权模型](https://idaas.xlabs.club/docs/advanced-topics/authorization-models/) → [审计](https://idaas.xlabs.club/docs/core-capabilities/audit-and-compliance/) |
+| 安全增强 | [MFA](https://idaas.xlabs.club/docs/core-capabilities/multi-factor-authentication/) → [安全实践](https://idaas.xlabs.club/docs/advanced-topics/security-best-practices/) → [零信任](https://idaas.xlabs.club/docs/advanced-topics/zero-trust-identity/) |
 
-这本书填补了中文世界的空白：**一份把原理、协议、工程实践与前沿趋势完整串联的系统性中文资料**——不是一堆互不相干的文章，而是一条从"什么是认证"到"零信任架构"的连贯主线。
+## 构建
 
-| 你需要…… | 这本书提供 |
-|----------|-----------|
-| 协议深度解读 | OAuth 2.0 / 2.1、OIDC、SAML 2.0、LDAP、SCIM——含安全边界、常见误区和真实流程 |
-| 工程落地配方 | Keycloak Operator、Helm Chart、反向代理配置、高可用搭建、监控——可直接复制使用 |
-| 选型决策框架 | Keycloak vs CAS vs Dex vs Casdoor——横向对比与选型标准 |
-| 架构模式 | 网关集成、BFF、Sidecar、多租户账号设计、联邦拓扑 |
-| 前沿知识 | 零信任、DID/VC、ReBAC、Passkey/WebAuthn——独立成章，不是脚注 |
+站点随 `main` 部署。需要 Node.js 26 与 pnpm。[Astro](https://astro.build/) + [Starlight](https://starlight.astro.build/)。
 
-## ✨ 这本书的不同之处
-
-- **一条连贯主线**——24 章环环相扣，通读下来获得的是完整的心智模型，而非零散知识点。
-- **协议优先，而非厂商优先**——先讲清 OAuth、SAML *为什么* 这么设计，再谈产品，产品就自然变得易懂。
-- **生产级配方**——每个部署章节都围绕真实 Kubernetes 集群、Helm Chart 与 Operator 模式构建，不是玩具示例。
-- **诚实的横向对比**——Keycloak、CAS、Dex、Casdoor 用同一套标准衡量，让你能在团队面前为选型决策辩护。
-- **面向前沿，不困于旧规**——ReBAC、AuthZEN/SSF、Passkey、可验证凭证、零信任均有独立章节，随领域演进而历久弥新。
-- **开放且免费**——没有付费墙，没有注册要求，没有厂商锁定。CC BY-NC 许可，随 `main` 分支自动部署。
-
-## 内容结构
-
-全书共 **5 部分、24 章、约 13 万字**，附术语速查表。
-
-| 部分 | 章节 | 涵盖内容 |
-|------|------|----------|
-| 📘 第一部分：IDaaS 基础 | 1–4 | IAM 核心理念、认证 vs 授权、身份生命周期 |
-| 📗 第二部分：协议与标准 | 5–9 | OAuth 2.0/2.1、OpenID Connect、SAML 2.0、LDAP、SCIM |
-| 📙 第三部分：核心能力 | 10–13 | SSO、MFA、身份联邦、审计与合规 |
-| 📕 第四部分：实现与实践 | 14–19 | Keycloak、Apereo CAS、Dex、方案对比、集成模式、K8s 部署 |
-| 📓 第五部分：高级主题 | 20–24 | RBAC/ABAC/ReBAC、安全、DID/VC、零信任、性能扩展 |
-| 📎 附录 | — | IDaaS 核心术语速查表 |
-
-<details>
-<summary>📖 完整目录</summary>
-
-**第一部分 · IDaaS 基础**
-- 第 1 章：什么是 IDaaS —— 定义、演进与核心价值
-- 第 2 章：IAM 核心理念 —— AAA 模型、设计原则与架构
-- 第 3 章：认证与授权深度辨析 —— AuthN vs AuthZ
-- 第 4 章：身份生命周期管理 —— 从创建到注销的全流程
-
-**第二部分 · 协议与标准**
-- 第 5 章：OAuth 2.0 深度解读 —— 授权模式、令牌管理、OAuth 2.1
-- 第 6 章：OpenID Connect —— ID Token、UserInfo、发现机制
-- 第 7 章：SAML 2.0 —— 断言、绑定、元数据与联邦
-- 第 8 章：LDAP 与目录服务 —— Active Directory 集成
-- 第 9 章：SCIM 协议 —— 标准化用户配置
-
-**第三部分 · 核心能力**
-- 第 10 章：单点登录（SSO）—— 架构模式与会话管理
-- 第 11 章：多因素认证（MFA）—— TOTP、FIDO2、自适应认证
-- 第 12 章：身份联邦与代理 —— 跨域身份互信
-- 第 13 章：审计与合规 —— 等保、ISO 27001、异常检测
-
-**第四部分 · 实现与实践**
-- 第 14 章：Keycloak 架构深度解析
-- 第 15 章：Apereo CAS —— 教育与企业 SSO
-- 第 16 章：Dex 身份代理 —— Kubernetes 原生方案
-- 第 17 章：IDaaS 方案全景对比 —— 选型决策框架
-- 第 18 章：集成模式与实践 —— 网关、BFF、Sidecar
-- 第 19 章：Kubernetes 生产环境部署
-
-**第五部分 · 高级主题**
-- 第 20 章：授权模型深度对比 —— RBAC、ABAC、ReBAC
-- 第 21 章：IDaaS 安全最佳实践
-- 第 22 章：性能与扩展性
-- 第 23 章：去中心化身份与可验证凭证
-- 第 24 章：零信任与身份驱动安全
-
-</details>
-
-## 👥 适合谁读
-
-需要系统掌握企业身份知识、又不想被语言障碍挡在门外的中文读者：
-
-- 🏗️ **架构师 / 技术负责人**——规划 SSO、身份中台、权限治理方案
-- 🔐 **安全团队**——MFA、审计合规、零信任、身份联邦
-- 🧑‍💻 **后端 / 平台工程师**——对接 OAuth、OIDC、SAML、Keycloak 等
-- 🧭 **SaaS / 平台团队**——多租户账号设计、RBAC、用户生命周期
-- 🆕 **IAM 初学者**——建立完整的身份领域知识体系
-
-## 🧭 推荐阅读路线
-
-| 你的目标 | 从这里开始 |
-|----------|-----------|
-| 快速建立体系 | [简介与阅读指南](https://idaas.xlabs.club/docs/guides/introduction/) → 第 1–9 章 |
-| 做 SSO / 协议接入 | OAuth 2.0 → OpenID Connect → SAML → SSO → 集成模式 |
-| 做身份平台选型 | Keycloak 架构 → CAS / Dex → 方案对比 → K8s 部署 |
-| 做权限治理 | AuthN vs AuthZ → RBAC/ABAC/ReBAC → 审计与合规 |
-| 做安全增强 | MFA → 安全最佳实践 → 零信任 |
-
-## 🌐 在线阅读
-
-**[idaas.xlabs.club](https://idaas.xlabs.club)**——支持全文搜索、暗色模式、目录导航。随 `main` 分支自动部署。
-
-## 🚀 本地开发
-
-基于 [Hugo](https://gohugo.io/) + [Doks](https://github.com/thuliteio/doks) 主题构建。
-
-```bash
-npm install          # 安装依赖
-npm run dev          # 启动开发服务器 → http://localhost:1313
-npm run build        # 生产构建 → public/
+```text
+.
+├── astro.config.mjs          # 站点与侧栏
+├── public/                   # 静态源文件（favicon 等）
+├── src/
+│   ├── assets/               # 需处理的资源（logo）
+│   ├── content/docs/         # 正文
+│   │   ├── index.md          # 首页 → /
+│   │   ├── blog/             # → /blog/
+│   │   └── docs/             # → /docs/… 章节
+│   ├── overrides/            # 组件覆盖
+│   ├── plugins/
+│   └── styles/
+└── dist/                     # 构建产物，不入库
 ```
 
-需要 Node.js 26.13.0 LTS、Hugo Extended 0.169.0，以及 Dart Sass（Thulite 3）。
+```bash
+pnpm install
+pnpm run dev      # http://localhost:4321
+pnpm run build    # dist/
+```
 
-## 🤝 贡献
+站内链接用 Markdown 路径，例如 `[标题](/docs/fundamentals/xxx/)`。
 
-本书持续完善中，欢迎参与：
+## 贡献
 
-- **发现错误？** → [提交 Issue](https://github.com/l10178/idaas-book/issues)
-- **想补充内容？** → [提交 Pull Request](https://github.com/l10178/idaas-book/pulls)
-- **有想看的主题？** → 在 Issue 中标记 `discussion`
+[Issue](https://github.com/void-sleep/idaas-book/issues) · [Pull Request](https://github.com/void-sleep/idaas-book/pulls)
 
-PR 请遵循现有 frontmatter 规范（`title`、`description`、`weight`、`menu`、`toc`），保持章节编号与排版风格一致。
+## 许可
 
-### 左侧导航（侧栏）约定
-
-- **标签自动精简**：`title` 末尾的 ` | IDaaS Book` 后缀、以及第一个 ` — ` / `——` / ` - ` 之后的副标题不会进入侧栏，完整标题保留在节点的 `title` 属性里（悬停可见）。因此 `title` 可以继续按 SEO 习惯写长句，不必为了导航刻意收敛。
-- **完全自定义侧栏文字**：在 front matter 加 `linkTitle: "短名字"`，侧栏原样使用、不再自动精简。
-- **让章节默认折叠**：内容较多的章节页（如 `solution-blogs/_index.md`）加
-
-  ```yaml
-  sidebar:
-    collapsed: true
-  ```
-
-  当前所在章节会自动展开，不受影响。
-
-实现方式是 `layouts/_partials/sidebar/render-section-menu.html` 覆盖主题同名 partial；升级 `@thulite/doks-core` 后需核对主题是否改了该文件。
-
-## ⭐ 为什么 Star 这个仓库
-
-如果你正在做身份相关工作——或者知道自己将来会做——Star 这个仓库意味着：
-
-- 📌 收藏一份持续更新的系统性参考
-- 🔔 获取新章节和协议变更的通知
-- 📈 帮助更多中文工程师发现这份资源
-
-**没有付费墙，没有注册要求，没有厂商锁定。** 就是一本想把事情讲清楚的书。
-
-## ⚖️ 许可协议
-
-内容：[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)（署名-非商业性使用 4.0 国际）。
-站点脚手架：遵循上游 [Doks](https://github.com/thuliteio/doks) 许可。
+正文：[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)。站点脚手架遵循 [Astro](https://github.com/withastro/astro) / [Starlight](https://github.com/withastro/starlight)。[English](README.en.md)

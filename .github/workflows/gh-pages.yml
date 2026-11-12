@@ -15,35 +15,27 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v5
 
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 11
+
     - name: Setup node
       uses: actions/setup-node@v6
       with:
-        node-version: '26.13.0'
-        cache: 'npm'
-        cache-dependency-path: 'package-lock.json'
-
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v3
-      with:
-        hugo-version: '0.169.0'
-        extended: true
-
-    - name: Setup Dart Sass
-      run: |
-        curl -fsSL "https://github.com/sass/dart-sass/releases/download/1.108.1/dart-sass-1.108.1-linux-x64.tar.gz" \
-          | tar -xz -C "$HOME"
-        echo "$HOME/dart-sass" >> "$GITHUB_PATH"
-        "$HOME/dart-sass/sass" --version
+        node-version: '26'
+        cache: 'pnpm'
+        cache-dependency-path: 'pnpm-lock.yaml'
 
     - name: Install dependencies
-      run: npm ci
+      run: pnpm install --frozen-lockfile
 
     - name: Build site
-      run: npm run build
+      run: pnpm run build
 
     - name: Deploy github pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
+        publish_dir: ./dist
         cname: idaas.xlabs.club
