@@ -1,0 +1,234 @@
+---
+slug: docs/protocols/oauth2.1-changes
+title: "OAuth 2.1 相比 OAuth 2.0 的变化 — IAM 协议升级与迁移指南"
+description: "OAuth 2.1 安全最佳实践整合与 IAM 协议升级指南：PKCE 强制、Implicit 与 ROPC 废弃、Refresh Token 发件人约束、DPoP 及从 OAuth 2.0 到 2.1 的 IAM 迁移对照表"
+date: 2026-07-08T00:00:00+08:00
+lastmod: 2026-08-24T21:10:00+08:00
+sidebar:
+  order: 24
+---
+
+
+## 为什么需要 OAuth 2.1
+
+> **状态核对（2026-08-24）**：OAuth 2.1 仍是 IETF Internet-Draft，不是已发布的 RFC；IETF Datatracker 当前列出 `draft-ietf-oauth-v2-1-15`（2026-03-02 更新）。因此，本文把“OAuth 2.1 的草案方向”和“已经可以执行的 RFC 9700 安全要求”分开描述。生产整改不应等待版本号落定，也不应把实现宣传成“已通过 OAuth 2.1 认证”。
+
+OAuth 2.0（RFC 6749）发布于 2012 年。在接下来近十年里，安全研究者发现了若干严重攻击面——Redirect URI 劫持、授权码拦截、CSRF、Mix-Up Attack、Token 泄露重放。社区通过一系列补充 RFC 逐个修补：
+
+- **RFC 7636 (PKCE)**：防止授权码拦截（2015）
+- **RFC 6819 / Security BCP**：安全威胁模型与缓解措施
+- **RFC 9207 (iss 参数)**：防止 Mix-Up Attack（2022）
+- **RFC 9449 (DPoP)**：Token 发件人约束（2024）
+
+OAuth 2.1 不是全新协议，而是把这些分散的最佳实践整合成一份统一规范草案。已经发布的 RFC 9700（OAuth 2.0 Security BCP）则独立落地了其中一部分安全要求；两者不能混称为同一份规范。
+
+如果你现在在写一个新的 OAuth 客户端或授权服务器，可以把 OAuth 2.1 草案和 RFC 9700 作为设计基线；但产品是否支持某项能力，仍要以产品文档和实际验证为准。草案名称不是兼容性认证，协议世界也没有“改个配置就自动升级”的魔法。
+
+## 变化总览
+
+```mermaid
+graph TD
+    A["OAuth 2.0 (RFC 6749, 2012)"] --> B["OAuth 2.1 (draft-ietf-oauth-v2-1)"]
+    
+    B --> C1["✅ 保留 & 强化"]
+    B --> C2["❌ 废弃 & 移除"]
+    B --> C3["🆕 新增"]
+
+    C1 --> D1["Authorization Code Flow"]
+    C1 --> D2["Client Credentials Flow"]
+    C1 --> D3["Device Code Flow<br/>(RFC 8628)"]
+    C1 --> D4["Refresh Token"]
+    C1 --> D5["Bearer Token<br/>(不推荐，但仍可用)"]
+
+    C2 --> E1["Implicit Grant<br/>(response_type=token)"]
+    C2 --> E2["ROPC / Password Grant<br/>(grant_type=password)"]
+    C2 --> E3["无 PKCE 的授权码流程"]
+    C2 --> E4["redirect_uri 宽松匹配"]
+
+    C3 --> F1["PKCE 对所有客户端强制"]
+    C3 --> F2["DPoP (RFC 9449)"]
+    C3 --> F3["iss 参数 (RFC 9207)"]
+    C3 --> F4["Refresh Token 发件人约束"]
+    C3 --> F5["redirect_uri 精确匹配"]
+```
+
+## 七大核心变化
+
+### 1. PKCE 对所有客户端强制
+
+**OAuth 2.0**：PKCE（Proof Key for Code Exchange）只推荐给公共客户端（SPA、移动 App），机密客户端可以不用。
+
+**OAuth 2.1**：所有使用授权码流程的客户端——不管是 SPA、移动 App 还是后端 Web 应用——都必须使用 PKCE。没有例外。
+
+```
+# OAuth 2.1 授权请求（注意 code_challenge 参数）
+GET /authorize?
+  response_type=code&
+  client_id=s6BhdRkqt3&
+  redirect_uri=https://client.example.com/callback&
+  code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&
+  code_challenge_method=S256&
+  state=xcoVv98y2kd44vuquye3
+```
+
+修改原因：即使后端 Web 应用在 `/token` 端点发送 `client_secret`，授权码仍然可能在前端被拦截（中间件日志、浏览器扩展、JS 注入等）。PKCE 确保即使授权码泄露，攻击者也无法用它换令牌。
+
+### 2. Implicit Grant 被移除
+
+**OAuth 2.0**：Implicit Grant（`response_type=token`）设计给纯前端 SPA——省略了授权码交换步骤，Access Token 直接从重定向 URL 的 fragment 中返回。
+
+**OAuth 2.1 草案**：Implicit 不再作为推荐流程。当前已发布的 RFC 9700 的准确措辞是：客户端 **SHOULD NOT** 使用 Implicit Grant，因为授权响应直接携带 Access Token，存在泄露和重放风险。
+
+原因：
+- Token 暴露在浏览器 URL fragment 中，可被历史记录、referer header、第三方脚本窃取
+- 无法使用 Refresh Token（因为 Refresh Token 不可暴露给前端），用户体验差
+- 授权码流程 + PKCE 在安全性上完全替代了 Implicit，且现代浏览器 CORS 已足够成熟支持 `/token` 端点跨域调用
+
+迁移路径：将所有 Implicit 客户端改为 Authorization Code + PKCE。
+
+### 3. ROPC 密码流程被移除
+
+**OAuth 2.0**：Resource Owner Password Credentials Grant（`grant_type=password`）允许客户端直接收集用户名和密码，换取 Access Token。
+
+**OAuth 2.1 草案**：ROPC 不再作为可接受的迁移目标；当前已发布的 RFC 9700 更明确地规定 ROPC **MUST NOT** 使用。
+
+原因：这个流程违背了 OAuth 的初衷——让用户**不**把密码给第三方应用。ROPC 在实际使用中几乎都是反模式：
+- 第三方应用获取了用户的明文密码
+- 无法支持 MFA——用户有 TOTP/Passkey 时 ROPC 无法处理
+- 违反 OWASP 和 GDPR 对密码处理的建议
+
+迁移路径：改用 Authorization Code Flow + PKCE。如果必须使用非交互式服务账户访问，用 Client Credentials Grant。
+
+### 4. redirect_uri 必须精确匹配
+
+**OAuth 2.0**：RFC 6749 对带在授权请求中的 `redirect_uri` 要求与注册值相同；但早期产品和实际部署常自行支持通配符、前缀或子串匹配。这里要区分规范要求与产品行为：不能因为某个授权服务器接受了宽松规则，就把它当成 OAuth 2.0 的要求。
+
+**安全实现基线**：redirect_uri 应按注册值严格匹配，不应使用前缀、子串或宽松解析。不要把“OAuth 2.1 草案中的归纳”写成已发布 RFC 的原文要求；RFC 9700 同样把重定向 URI 校验列为关键防护。
+
+修改原因：宽松匹配是 Redirect URI 劫持漏洞的根本原因。攻击者可以注册 `https://app.example.com/callback/attacker-path`，或利用开放重定向漏洞构造恶意 redirect_uri。精确匹配消除了这一整类攻击面。
+
+### 5. Refresh Token 必须有发件人约束
+
+**OAuth 2.0**：Refresh Token 是 Bearer Token——谁拿到都能用。如果 Refresh Token 泄露，攻击者可以持续刷新获取新的 Access Token。
+
+**安全实现基线**：公开客户端的 Refresh Token 必须使用发件人约束或 Refresh Token Rotation；RFC 9700 §2.2.2 对这一点已有明确要求。不要把所有客户端的实现条件简化成同一句“OAuth 2.1 强制”：
+
+| 约束方式 | 机制 | 标准 |
+|---------|------|------|
+| DPoP | 客户端对每个请求生成签名 JWT，绑定到特定密钥对 | RFC 9449 |
+| mTLS | 客户端证书绑定，Token 只能在持有对应私钥的连接上使用 | RFC 8705 |
+| 一次性 Refresh Token | 每次使用 Refresh Token 后，AS 发一个新的 Refresh Token 并撤销旧的 | Security BCP |
+
+修改原因：Bearer Refresh Token 的长期有效性使得泄露后的影响极为严重。发件人约束确保即使 Token 被窃取，攻击者也无法在不同设备上使用。
+
+### 6. iss 参数防 Mix-Up Attack
+
+**OAuth 2.0**：授权服务器返回的响应中没有明确的 issuer 标识，客户端可能无法区分响应来自哪个 AS。
+
+**多授权服务器场景的安全基线**：客户端需要把授权响应绑定到预期的 issuer。RFC 9207 定义了授权响应中的 `iss` 参数；RFC 9700 要求客户端在此场景采用 `iss` 或等价的防 Mix-Up 方法。
+
+```
+# 授权服务器在重定向时附带 iss 参数
+HTTP 302 https://client.example.com/callback?
+  code=SplxlOBeZQQYbYS6WxSbIA&
+  state=xcoVv98y2kd44vuquye3&
+  iss=https://auth.example.com    ← OAuth 2.1 新增
+```
+
+客户端验证 `iss` 确保响应确实来自预期的授权服务器，防止前端被诱导到恶意 AS 完成授权（Mix-Up Attack）。
+
+### 7. DPoP：Token 证明持有
+
+DPoP（Demonstration of Proof-of-Possession，RFC 9449）不是 OAuth 2.1 规范本身的一部分，但它是 OAuth 2.1 安全模型中推荐的发件人约束实现方式。
+
+核心思路：客户端生成一个非对称密钥对，每次请求都附带一个 DPoP Proof JWT（用私钥签名）：
+
+```http
+POST /token HTTP/1.1
+DPoP: eyJhbGciOiJFUzI1NiIsInR5cCI6ImRwb3Arand0In0.eyJodG0iOiJQT1NUIiwiaHR1IjoiL3Rva2VuIiwiaWF0IjoxNjA2MjAwMDAwLCJqdGkiOiIxMjM0NTY3ODkwIn0....
+
+grant_type=authorization_code&code=xxx&...
+```
+
+授权服务器将 DPoP 公钥绑定到颁发的 Access Token 和 Refresh Token 中。后续使用这些 Token 的请求也必须附带 DPoP Proof，服务器验证 Proof 中的公钥与绑定的公钥一致。
+
+完整的 DPoP 流程（含 Mermaid 时序图）、DPoP Proof JWT 结构详解、Keycloak 26 DPoP 配置和排错指南见独立章节：[OAuth 2.0 DPoP 深度解析](/docs/protocols/oauth2-dpop/)。
+
+## OAuth 2.0 → 2.1 迁移对照表
+
+| 项目 | OAuth 2.0 (RFC 6749) | OAuth 2.1 | 迁移动作 |
+|------|---------------------|-----------|---------|
+| 授权码流程 (Auth Code) | PKCE 可选 | PKCE 强制 | 所有客户端添加 PKCE |
+| Implicit Grant | 可用 | 草案不再推荐；RFC 9700 为 SHOULD NOT | 改为 Auth Code + PKCE |
+| ROPC (Password Grant) | 可用 | RFC 9700 为 MUST NOT 使用 | 改为 Auth Code + PKCE 或 Client Credentials |
+| redirect_uri 匹配 | 实现差异较大 | 安全基线要求严格校验 | 检查 AS 配置，拒绝前缀/子串匹配 |
+| Refresh Token | Bearer（无约束） | 公开客户端必须约束或轮换 | 实现 DPoP、mTLS 或 Rotation |
+| iss 参数 | RFC 9207 前未定义 | 多 AS 场景用 `iss` 或等价防护 | AS 返回授权响应 `iss`，客户端验证 |
+| response_type | code, token, id_token 等 | **仅 code** | 移除 token/id_token 响应类型 |
+| 公共客户端 secret | 不可用 | **不推荐使用** | 改用 PKCE，不再依赖 client_secret |
+
+## 对 IAM 系统和运维意味着什么
+
+OAuth 2.1 不只是协议升级——它是企业 IAM 安全基线的重新定义。如果你的 IAM 系统（Keycloak、CAS、Dex 等）还在按 OAuth 2.0 的默认配置运行，以下几个变更直接影响到认证链路的安全性。更多 IAM 协议选型的整体考量可参阅 [IAM 认证协议选型指南](/docs/advanced-topics/iam-protocol-selection-guide/)。
+
+### 如果你在维护授权服务器（Keycloak、CAS、Dex 等）
+
+- **Keycloak**：从 17.0 起支持 PKCE、DPoP（实验性），24.x+ 建议全面启用 PKCE；在 Realm Settings → Security Defenses 中启用 PKCE 强制策略
+- **Apereo CAS**：6.6+ 支持 PKCE，7.x 增加了 DPoP 支持
+- **Dex**：默认使用 PKCE，但 ROPC 从未实现过（设计上就已排除）
+
+### 如果你在写客户端应用
+
+1. **新建项目**：直接按 OAuth 2.1 规范实现——Auth Code + PKCE + DPoP
+2. **SPA/移动 App**：如果还在用 Implicit，立刻迁移到 Auth Code + PKCE
+3. **后端 API**：检查 Refresh Token 是否可以在泄露后被撤销和替换
+4. **多授权服务器客户端**：验证授权响应中的 `iss` 或采用 RFC 9700 认可的等价 Mix-Up 防护
+
+## 常见问题
+
+### OAuth 2.1 已经是 RFC 了吗？
+
+截至 2026 年 8 月 17 日，IETF Datatracker 展示的版本为 `draft-ietf-oauth-v2-1-15`；OAuth 2.1 仍处于草案阶段，尚未正式发布为 RFC。可以采用已发布的 RFC 9700 安全要求，并把 OAuth 2.1 草案作为迁移目标；但不能据此声称 OAuth 2.1 已经成为 RFC，或所有产品都完整实现了它。发布前应重新检查草案版本，因为草案内容和编号仍可能变化。
+
+### Device Code Flow 还在吗？
+
+在。Device Authorization Grant（RFC 8628）——给电视、IoT 等无浏览器设备用的流程——在 OAuth 2.1 中保留且推荐。详细原理和配置实战见 [OAuth 2.0 设备授权流程实战指南](/docs/solution-blogs/oauth2-device-authorization-grant/)。
+
+### Client Credentials Flow 还需要 PKCE 吗？
+
+不需要。Client Credentials Grant 是服务器对服务器的交互，没有前端（没有授权码交换），PKCE 不适用。但建议仍然使用 mTLS 或 DPoP 做发件人约束。
+
+### DPoP 和 mTLS 怎么选？
+
+- DPoP：应用层实现，不需要 PKI 基础设施，适合大多数场景
+- mTLS：传输层绑定，需要维护客户端证书，适合已有 mTLS 基础设施的内部服务网格
+
+### 企业 IAM 升级到 OAuth 2.1 的风险点在哪？
+
+IAM 升级到 OAuth 2.1 的风险不在授权服务器自身（Keycloak 24+ / CAS 7.x 已基本就绪），而在**下游客户端**。实际升级中的三大踩坑点：
+
+1. **Implicit 客户端的迁移遗漏**：很多老旧内部应用（特别是 2018 年前开发的 SPA）仍在使用 Implicit Grant。IAM 端升级后在 Realm/Client 层面禁用 `response_type=token` 可能导致这些应用突然无法登录。建议先扫描所有 Client 的 `response_type` 配置，给每个 Implicit 客户端排迁移窗口。
+
+2. **ROPC 的替代方案选错**：很多运维脚本和自动化工具在用 ROPC（`grant_type=password`）拿 Token——迁移时最常见的错误是直接换成长期有效的 Client Credentials Token，导致\"服务凭证永不过期\"的新的安全问题。正确做法：Client Credentials + 短有效期 + Token 缓存。
+
+3. **PKCE 强制后的 SPA 适配**：如果你的 SPA 认证库（如 `oidc-client-ts`、`keycloak-js`）版本过旧，可能不支持自动 PKCE。升级库版本通常能解决，但需要同步更新回调处理和 Token 刷新逻辑。
+
+建议的 IAM 升级策略：先在 Staging 环境开启 OAuth 2.1 安全策略，用一周时间收集客户端兼容性报告，确认无误后再推广到生产。更多 IAM 安全配置细节见 [IAM 安全最佳实践](/docs/advanced-topics/security-best-practices/)。
+
+## 相关章节
+
+- [OAuth 2.0 深度解读](/docs/protocols/oauth2-deep-dive/)：OAuth 2.0 授权框架的基础概念和四种角色
+- [OAuth 2.0 授权码流程与 PKCE 完整图解](/docs/protocols/oauth2-authorization-code-pkce/)：授权码流程和 PKCE 的 Mermaid 时序图
+- [OAuth 2.0 攻击面与防护深度图解](/docs/protocols/oauth2-attack-surface/)：OAuth 2.1 解决了哪些攻击面
+- [OpenID Connect 深度解读](/docs/protocols/openid-connect/)：OAuth 2.1 是 OIDC 的授权层基础
+- [IAM 认证协议选型指南](/docs/advanced-topics/iam-protocol-selection-guide/)：企业 IAM 协议选型决策——OAuth 2.1/OIDC/SAML 如何选择
+- [IAM 安全最佳实践](/docs/advanced-topics/security-best-practices/)：从 OAuth 2.1 角度看 IAM 安全基线配置
+
+## 参考来源
+
+- [OAuth 2.1 draft-ietf-oauth-v2-1](https://datatracker.ietf.org/doc/draft-ietf-oauth-v2-1/)
+- [RFC 7636 — Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/rfc7636/)
+- [RFC 9207 — OAuth 2.0 Authorization Server Issuer Identification](https://datatracker.ietf.org/doc/rfc9207/)
+- [RFC 9449 — OAuth 2.0 Demonstrating Proof of Possession (DPoP)](https://datatracker.ietf.org/doc/rfc9449/)
+- [OAuth 2.0 Security BCP (RFC 9700)](https://www.rfc-editor.org/rfc/rfc9700)
+- [OAuth 2.1 Migration Guide — Auth0](https://auth0.com/docs/authenticate/protocols/oauth-2-1-migration-guide)

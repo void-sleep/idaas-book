@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="IDaaS Book">
+  <rect width="48" height="48" rx="12" fill="#1e2835"/>
+  <rect x="8.5" y="12" width="6.2" height="24" rx="1.4" fill="#8eabc8"/>
+  <path
+    fill="#8eabc8"
+    fill-rule="evenodd"
+    d="M18.8 12h8.2c8.1 0 12.5 5.4 12.5 12s-4.4 12-12.5 12h-8.2V12Zm7.6 6.6c4.4 0 6.6 2.4 6.6 5.4s-2.2 5.4-6.6 5.4-6.6-2.4-6.6-5.4 2.2-5.4 6.6-5.4Z"
+  />
+</svg>

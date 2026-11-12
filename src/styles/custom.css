@@ -1,0 +1,82 @@
+/* IDaaS Book overrides */
+:root {
+  --sl-content-width: 52rem;
+  /* Muted steel / slate. */
+  --sl-color-accent-low: hsl(215, 28%, 16%);
+  --sl-color-accent: hsl(215, 42%, 52%);
+  --sl-color-accent-high: hsl(210, 28%, 76%);
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-high: hsl(215, 32%, 28%);
+  --sl-color-accent: hsl(215, 40%, 38%);
+  --sl-color-accent-low: hsl(210, 28%, 92%);
+}
+
+.sl-blog-posts {
+  gap: 1.25rem !important;
+}
+
+.sl-blog-preview {
+  gap: 0.35rem !important;
+}
+
+.sl-blog-preview-link {
+  margin-bottom: 0.25rem !important;
+}
+
+.pagination-links a {
+  padding: 0.65rem 0.85rem;
+  font-size: var(--sl-text-sm);
+}
+
+.pagination-links .link-title {
+  font-size: var(--sl-text-base);
+  line-height: 1.35;
+}
+
+.pagination-links svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Starlight opens the right TOC at 72rem. With a 52rem article that
+   three-column layout collides on laptop widths (~1280–1600px). Keep
+   the in-page TOC until an external-monitor width. */
+@media (min-width: 72rem) and (max-width: 99.99rem) {
+  :root {
+    --sl-mobile-toc-height: 3rem;
+  }
+
+  html {
+    scroll-padding-top: calc(1.5rem + var(--sl-nav-height) + var(--sl-mobile-toc-height));
+  }
+
+  .lg\:sl-hidden {
+    display: block;
+  }
+
+  .right-sidebar-panel.lg\:sl-block {
+    display: none;
+  }
+
+  .right-sidebar-container {
+    width: auto;
+    margin-inline-start: 0;
+    position: static;
+  }
+
+  .right-sidebar {
+    position: static;
+    height: auto;
+    width: auto;
+    padding-top: 0;
+    border-inline-start: 0;
+    overflow: visible;
+  }
+
+  [data-has-sidebar][data-has-toc] .main-pane {
+    width: 100%;
+    --sl-content-margin-inline: auto;
+  }
+}
