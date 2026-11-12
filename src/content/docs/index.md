@@ -101,4 +101,4 @@ Keycloak 架构剖析、Apereo CAS、Dex 身份代理、方案全景对比与选
 ## License
 
 内容：[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)（署名-非商业性使用 4.0 国际）  
-站点脚手架：沿用上游 [Doks](https://github.com/thuliteio/doks) 许可
+站点脚手架遵循 [Astro](https://github.com/withastro/astro) / [Starlight](https://github.com/withastro/starlight)
