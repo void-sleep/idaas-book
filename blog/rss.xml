@@ -1757,4 +1757,77 @@
 &lt;li&gt;MySQL GR 集群设置合理的故障转移超时，避免 Keycloak 启动窗口与 GR 切换窗口重叠&lt;/li&gt;
 &lt;li&gt;生产环境建议使用 PostgreSQL，避免 MySQL GR 的只读状态问题&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded><category>keycloak</category><category>liquibase</category><category>mysql</category><category>group-replication</category><category>database-migration</category><category>troubleshooting</category></item></channel></rss>
+</content:encoded><category>keycloak</category><category>liquibase</category><category>mysql</category><category>group-replication</category><category>database-migration</category><category>troubleshooting</category></item><item><title>Windows Server AD 域服务安装与 LDAPS 启用完整指南</title><link>https://idaas.xlabs.club/blog/windows-ad/</link><guid isPermaLink="true">https://idaas.xlabs.club/blog/windows-ad/</guid><description>Windows Server AD 域服务从零安装：添加域服务角色、配置新林域控、用户与组管理、LDAPS 证书配置，适用于 Keycloak 对接前的测试环境搭建</description><pubDate>Mon, 14 Dec 2020 15:54:37 GMT</pubDate><content:encoded>&lt;p&gt;说明：此步骤仅仅是为了如何快速搭建起一个测试版 Windows AD 服务，不可用于生产。&lt;/p&gt;
+&lt;div&gt;&lt;h2 id=&quot;前置条件&quot;&gt;前置条件&lt;/h2&gt;&lt;/div&gt;
+&lt;p&gt;安装 Windows AD 域控服务器，需要提前准备：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Windows Server 2008 及更新版本操作系统，如 4 核 8G 内存，60G 硬盘的主机一台。&lt;/li&gt;
+&lt;li&gt;提前规划好域名，比如本示例为 iam.nxest.local.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Windows Server 不同版本略有差异，但是基本要做的就是下面几项：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;启用功能：角色和功能里添加 Windows AD 域服务。&lt;/li&gt;
+&lt;li&gt;配置：配置 AD 域名、管理员密码等基本信息。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div&gt;&lt;h2 id=&quot;windows-server-2012-步骤如下&quot;&gt;Windows Server 2012 步骤如下&lt;/h2&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;点击开始菜单，找到“服务器管理器”，打开，显示如下界面。
+&lt;a href=&quot;./ad-001.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;764&quot; height=&quot;499&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-001.qO09sOIY_Z1AtaMH.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;点击右上角 管理&gt;“添加角色和功能”按钮，弹出如下界面。
+&lt;a href=&quot;./ad-002.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1466&quot; height=&quot;729&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-002.CwdyR_Q__DRLJD.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;选择“基于角色或基于功能的安装”，然后点“下一步”。
+&lt;a href=&quot;./ad-003.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1192&quot; height=&quot;834&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-003.YVhGQBwy_1Qtryk.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;服务器选择这里选择默认的，假如你需要针对其它主机安装 AD 角色，这里可以选择你需要的主机，点击“下一步”。
+&lt;a href=&quot;./ad-004.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1194&quot; height=&quot;838&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-004.ekliiGNw_qnQUE.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;这里勾选“Active Directory 域服务”。
+&lt;a href=&quot;./ad-005.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1185&quot; height=&quot;835&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-005.SH2zhGi4_XH47K.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当勾选这个选项时，会弹出对话框，点“添加功能”，在功能这个选项卡直接点下一步，一直下一步直到最后一步点击安装。
+&lt;a href=&quot;./ad-006.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1197&quot; height=&quot;828&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-006.DKMo_1Fm_2aTm9b.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装成功后我们点击“关闭”，但这还没有完全安装成功，还需要继续配置。点击服务器右上角的“功能按钮”, 弹出继续配置 AD 的对话框。
+&lt;a href=&quot;./ad-007.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1459&quot; height=&quot;741&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-007.Cd4spnda_ZP0Cph.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;根据提示，添加新林，输入准备好的域名。
+&lt;a href=&quot;./ad-008.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1157&quot; height=&quot;829&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-008.jtmA5FOS_Z20yiAC.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;林功能级别选择最高的版本。
+&lt;a href=&quot;./ad-009.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1167&quot; height=&quot;825&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-009.WC7KFYWR_14vMOo.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;输入 NetBIOS 域名，都是简称，一般是你准备的域名的第一位。
+&lt;a href=&quot;./ad-010.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1143&quot; height=&quot;826&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-010.Wl6Hez3Y_24OIEm.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;下一步，默认即可。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;下一步，先决条件检查，可能花费 10 分钟左右，请耐心等待。
+&lt;a href=&quot;./ad-012.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1173&quot; height=&quot;834&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-012.z5w3oAm7_Z1W5uAN.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;检查通过后才能点击安装。
+&lt;a href=&quot;./ad-013.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;1164&quot; height=&quot;826&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-013.B8AliJQl_17Bk8h.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装完成后，会提示注销重启，如果未提示重启，请手动重启下服务器。
+&lt;a href=&quot;./ad-014.png&quot;&gt;&lt;img alt=&quot;AD&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;865&quot; height=&quot;412&quot; src=&quot;https://idaas.xlabs.club/_astro/ad-014.ChvHNQJT_1XaOX5.webp&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div&gt;&lt;h2 id=&quot;用户管理&quot;&gt;用户管理&lt;/h2&gt;&lt;/div&gt;
+&lt;p&gt;安装完成后，可通过“Active Directory 用户和计算机”管理用户。此功能可通过控制面板或菜单搜索到。&lt;/p&gt;
+&lt;p&gt;打开后即可在 Users 下右键创建组和用户，请根据需要提前划分分组，增加用户。&lt;/p&gt;
+</content:encoded><category>windows-ad</category><category>active-directory</category><category>ldaps</category><category>keycloak</category></item></channel></rss>
