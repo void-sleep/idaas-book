@@ -110,7 +110,7 @@ flowchart LR
     O -->|scopes| R
 ```
 
-特点：Role 始终在 Organization 上下文内生效。一个用户的 `editor` 角色只在 Organization A 内有效，不会泄露到 Organization B。这对 B2B SaaS 的正确授权隔离至关重要。
+特点：Role 始终在 Organization 上下文内生效。一个用户的 `editor` 角色只在 Organization A 内有效，不会泄露到 Organization B。反过来讲，如果角色不按组织隔离，同一个 `editor` 在 A 企业有效、到了 B 企业也照样生效，B 租户的数据就等于对 A 企业的成员敞开。
 
 与 Keycloak 的对比——Keycloak 的 RBAC 通过 Realm Role / Client Role / Group / Composite Role 实现，功能更强但概念更多。Logto 的 RBAC 更靠近 SaaS 场景：角色依附于组织、权限依附于 API 资源，避免过度设计。
 

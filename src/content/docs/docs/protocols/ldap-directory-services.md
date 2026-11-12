@@ -116,7 +116,7 @@ ldapsearch -H ldaps://ldap.example.com \
 
 ## 8.3 Active Directory
 
-Microsoft Active Directory 是最广泛部署的目录服务。了解 AD 对于 IAM 实践至关重要——大多数企业仍在使用 AD 作为员工身份的权威来源，IAM 平台需要与 AD 对接才能实现「员工入职即自动开通账号、离职即自动回收权限」的完整身份生命周期。
+Microsoft Active Directory 是最广泛部署的目录服务。多数企业仍把 AD 作为员工身份的权威来源，因此 IAM 平台几乎都要和 AD 对接。不对接的代价很具体：员工入职得在 AD 和 IAM 里各建一次账号，离职得在两边各停用一次；任何一边漏掉，就会留下一个能继续登录的账号。
 
 ### AD 核心概念
 

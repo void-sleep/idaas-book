@@ -16,7 +16,7 @@ sidebar:
 
 - 用户只需要记住一个强密码（而不是 N 个弱密码或同一个密码用 N 遍）
 - 认证策略集中管理（强制 MFA、密码策略统一执行）
-- 会话可以集中管理和吊销——这对于 IAM 合规审计至关重要
+- 会话可以集中管理和吊销，审计时能说清「谁在何时登入了哪个应用、会话又在何时被清除」
 
 关于 IAM 整体概念，可先阅读 [IAM 是什么](/docs/fundamentals/what-is-iam/)；关于 SSO 依赖的协议细节见 [OAuth 2.0 与 OIDC](/docs/protocols/openid-connect/) 和 [SAML 2.0](/docs/protocols/saml2/)。
 

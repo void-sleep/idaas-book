@@ -255,7 +255,7 @@ flowchart TD
 
 ## 20.8 IAM 授权模型小结
 
-授权模型的选择取决于 IAM 业务的复杂度和场景需求。RBAC 仍然是大多数企业 IAM 应用的最佳起点——角色与组织架构对齐、审计友好；ABAC 在需要动态、精细控制的合规场景（金融、医疗、政务）中不可或缺；ReBAC 在强调关系的协作型 IAM 应用中是自然之选。好的 IAM 实践是组合使用——RBAC 作为骨架，策略引擎补充动态规则，关系模型处理继承和共享。（关于 IAM 权限设计的更多决策考量，可参阅 [IAM 协议选型指南](/docs/advanced-topics/iam-protocol-selection-guide/) 和 [IAM 安全最佳实践](/docs/advanced-topics/security-best-practices/)。）
+授权模型的选择取决于 IAM 业务的复杂度和场景需求。RBAC 仍然是大多数企业 IAM 应用的最佳起点——角色与组织架构对齐、审计友好；ABAC 在授权决策依赖运行时上下文（时间窗口、设备合规状态、地理位置、用户等级与文档密级，常见于金融、医疗、政务）时才有意义；ReBAC 在强调关系的协作型 IAM 应用中是自然之选。好的 IAM 实践是组合使用——RBAC 作为骨架，策略引擎补充动态规则，关系模型处理继承和共享。（关于 IAM 权限设计的更多决策考量，可参阅 [IAM 协议选型指南](/docs/advanced-topics/iam-protocol-selection-guide/) 和 [IAM 安全最佳实践](/docs/advanced-topics/security-best-practices/)。）
 
 ## 20.9 常见问题（FAQ）
 
