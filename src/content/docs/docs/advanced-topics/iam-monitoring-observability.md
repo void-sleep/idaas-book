@@ -1,5 +1,5 @@
 ---
-title: "第23章：IAM 监控与可观测性最佳实践 — Metrics、日志、Trace 三位一体"
+title: "IAM 监控与可观测性最佳实践 — Metrics、日志、Trace 三位一体"
 description: "IAM 监控与可观测性完整指南：Keycloak 等身份系统的关键指标定义、Prometheus 采集、审计日志规范、分布式追踪集成、告警策略与可观测性架构设计"
 date: 2026-07-12T00:00:00+08:00
 sidebar:
