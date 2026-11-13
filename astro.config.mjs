@@ -4,9 +4,22 @@ import starlightBlog from 'starlight-blog';
 import astroMermaid from 'astro-mermaid';
 import { blogZhI18nPlugin } from './src/plugins/blog-zh-i18n.ts';
 
+// 外链新窗口打开：构建期给 <a href="http(s)://..."> 注入 target/rel，零运行时。
+const externalLinks = () => (t) => {
+  const w = (n) => {
+    if (n.tagName === 'a' && /^https?:\/\//i.test(n.properties?.href || '')) {
+      n.properties.target = '_blank';
+      n.properties.rel = 'noopener noreferrer';
+    }
+    n.children?.forEach(w);
+  };
+  w(t);
+};
+
 export default defineConfig({
   site: 'https://idaas.xlabs.club',
   trailingSlash: 'ignore',
+  markdown: { rehypePlugins: [externalLinks] },
   build: { format: 'directory' },
   vite: {
     build: {
