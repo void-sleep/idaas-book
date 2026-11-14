@@ -13,6 +13,12 @@ dist
 .worktrees/
 .teamai/
 
+# Installed skills (external dependencies)
+.agents/skills/
+.claude/skills/
+agent/skills/
+skills-lock.json
+
 .env
 .env.*
 !.env.example

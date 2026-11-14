@@ -14,6 +14,7 @@
 
 ## 写作风格
 
+- 每次写/改技术文档或工程博客前，先读取并遵循项目 skill `tech-docs-blog-writing`（`npx skills add https://github.com/void-sleep/agent-skills --skill tech-docs-blog-writing`）
 - 科技风简洁不啰嗦，无中间过程性表示，无关废话一律禁用
 - 客观描述，不要拉踩：写产品、协议、方案的优劣用可验证的事实和具体代价，不贬低其他选项，也不用 superlative 抬高一方的说法（"最完整""最成熟""最优解""无可替代""极致"之类）。选型结论写成"什么条件下合适"，不写成排名
 
