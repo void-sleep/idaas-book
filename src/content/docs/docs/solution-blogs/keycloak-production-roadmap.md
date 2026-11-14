@@ -90,7 +90,7 @@ flowchart TD
 
 ## 第二步：数据库配置
 
-Keycloak 支持 PostgreSQL、MySQL、MariaDB、Oracle、MSSQL。**生产环境唯一推荐 PostgreSQL**——Keycloak 官方测试最充分、社区踩坑最少。
+Keycloak 支持 PostgreSQL、MySQL、MariaDB、Oracle、MSSQL。**生产环境推荐 PostgreSQL**——官方测试覆盖最多，社区实践也最集中。
 
 ### 最小配置
 

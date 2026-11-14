@@ -23,13 +23,13 @@ sidebar:
 - 需要统一管理不同 IM 来源的用户（部分员工用企业微信，部分用飞书）
 - 新员工入职后自动在 Keycloak 中创建用户（Just-In-Time Provisioning）
 
-> **协议选型提示**：在对接前，建议先了解 IAM 中 OIDC 和 SAML 的适用场景差异——详见 [IAM 协议选型指南](/docs/advanced-topics/iam-protocol-selection-guide/)。国内 IM 平台中，飞书对标准 OIDC 的支持最成熟，企业微信和钉钉需要额外适配。
+> **协议选型提示**：在对接前，建议先了解 IAM 中 OIDC 和 SAML 的适用场景差异——详见 [IAM 协议选型指南](/docs/advanced-topics/iam-protocol-selection-guide/)。国内 IM 平台中，飞书的 OIDC 实现更接近标准，企业微信和钉钉需要额外适配。
 
 ## 不适用场景
 
 - 只需要在单一应用中对接 IM 登录——直接用 IM 的 OAuth SDK 更快，Keycloak 中间层反而增加复杂度
 - 对外 C 端用户登录——企业微信和钉钉的 OAuth 登录通常限定组织内成员
-- 需要极致的移动端体验——IM 平台原生 SDK 在某些场景下比 OIDC 重定向流程更流畅
+- 需要贴近原生的移动端体验——IM 平台原生 SDK 在某些场景下比 OIDC 重定向流程更流畅
 
 ## 总体架构
 
@@ -78,7 +78,7 @@ Keycloak 在这一架构中扮演 **Identity Broker（身份中介）**角色：
 | **飞书** | OIDC（推荐）/ OAuth 2.0 | 飞书开放平台 → 创建企业自建应用 | `open_id` / `union_id` | [open.feishu.cn](https://open.feishu.cn) |
 | **钉钉** | OAuth 2.0 / OIDC（新版） | 钉钉开放平台 → 创建应用 | `openId` / `unionId` | [open.dingtalk.com](https://open.dingtalk.com) |
 
-> 三平台均在向标准 OIDC 协议靠拢。飞书的 OIDC 支持最成熟（Discovery Endpoint、标准 claims）。企业微信和钉钉传统上使用自有 OAuth 2.0 变体，但 Keycloak 可以通过 Generic OIDC Provider 或自定义 Identity Provider 对接。
+> 三平台均在向标准 OIDC 协议靠拢。飞书的 OIDC 支持更贴近标准（Discovery Endpoint、标准 claims）。企业微信和钉钉传统上使用自有 OAuth 2.0 变体，但 Keycloak 可以通过 Generic OIDC Provider 或自定义 Identity Provider 对接。
 
 ## 通用配置步骤
 
@@ -158,7 +158,7 @@ Keycloak Mapper 配置：
 
 ## 飞书 OIDC 集成详解（推荐起点）
 
-飞书对标准 OIDC 协议的支持最完整，推荐作为第一个对接的平台。
+飞书对标准 OIDC 协议的支持更完整，推荐作为第一个对接的平台。
 
 ### 飞书开放平台配置
 
@@ -322,7 +322,7 @@ department → ${CLAIM.department}
 
 ## 小结
 
-将企业微信、飞书、钉钉作为 Keycloak 的上游 Identity Provider，是让企业内部应用「一键登录」最少的维护成本方案。飞书的 OIDC 支持最成熟，推荐优先对接；企业微信和钉钉需要额外适配，但收益同样明显——员工用自己每天都在用的 IM 账号登录内部系统，无需额外记忆密码，IT 团队不需要维护独立的密码数据库。
+将企业微信、飞书、钉钉作为 Keycloak 的上游 Identity Provider，是让企业内部应用「一键登录」最少的维护成本方案。飞书的 OIDC 支持更贴近标准，推荐优先对接；企业微信和钉钉需要额外适配，但收益同样明显——员工用自己每天都在用的 IM 账号登录内部系统，无需额外记忆密码，IT 团队不需要维护独立的密码数据库。
 
 ## 常见问题（FAQ）
 

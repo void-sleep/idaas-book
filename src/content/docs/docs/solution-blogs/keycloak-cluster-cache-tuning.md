@@ -345,7 +345,7 @@ Distributed 缓存的 Session 数据在写入时同步到 owner 节点（无延�
 
 ### Q: 使用 K8s 时到底用哪个传输栈？
 
-Keycloak 26.x 推荐在所有环境（包括 K8s）统一使用 `jdbc-ping`。它通过数据库注册节点，不需要 DNS 解析、IP 多播或云 API——这是最稳定、最通用的方案。旧版 `kubernetes (DNS_PING)` 已在 26.x 中标记为弃用。
+Keycloak 26.x 推荐在所有环境（包括 K8s）统一使用 `jdbc-ping`。它通过数据库注册节点，不需要 DNS 解析、IP 多播或云 API——这也是它在多数环境里比 DNS_PING 更稳定的原因。旧版 `kubernetes (DNS_PING)` 已在 26.x 中标记为弃用。
 
 ## 回滚方式
 

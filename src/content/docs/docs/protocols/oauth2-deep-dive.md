@@ -55,7 +55,7 @@ OAuth 2.0 定义了四种核心授权模式，加上 PKCE 扩展和 Device Flow�
 
 ### 5.3.1 授权码模式（Authorization Code）
 
-**这是最安全、最广泛使用的模式**。核心特征是用户浏览器不直接接触 Access Token——它只拿到一个一次性授权码（authorization code），由后端服务器用这个 code 去换 token，用户密码全程不经过客户端后端。
+**这是推荐默认选择的模式，也是使用最广的一种**。核心特征是用户浏览器不直接接触 Access Token——它只拿到一个一次性授权码（authorization code），由后端服务器用这个 code 去换 token，用户密码全程不经过客户端后端。
 
 ```mermaid
 sequenceDiagram
@@ -172,7 +172,7 @@ graph TD
     Start["需要哪种 OAuth 授权？"] --> Q1{"有用户交互？"}
 
     Q1 -->|"是"| Q2{"应用类型？"}
-    Q2 -->|"Web/SPA/移动 App"| AuthCode["✅ 授权码 + PKCE<br/>最安全、最通用"]
+    Q2 -->|"Web/SPA/移动 App"| AuthCode["✅ 授权码 + PKCE<br/>推荐默认"]
     Q2 -->|"输入受限设备<br/>(TV/IoT/打印机)"| DeviceFlow["✅ 设备授权模式<br/>Device Flow<br/>(RFC 8628)"]
 
     Q1 -->|"否（M2M/服务间）"| ClientCred["✅ 客户端凭证模式<br/>Client Credentials<br/>适合微服务/后台任务"]

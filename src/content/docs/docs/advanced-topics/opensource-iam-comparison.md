@@ -29,7 +29,7 @@ graph TD
     Q2 -->|"是"| CASDOOR["Casdoor<br/>轻量、开箱即用"]
     Q2 -->|"否"| LOGTO["Logto / Zitadel<br/>开发者友好"]
 
-    Q3 -->|"是（LDAP/AD、SAML、审计）"| KC["Keycloak<br/>功能最全面"]
+    Q3 -->|"是（LDAP/AD、SAML、审计）"| KC["Keycloak<br/>覆盖面广"]
     Q3 -->|"需要云原生微服务架构"| ORY["Ory 系列<br/>组件化、API-first"]
     Q3 -->|"需要灵活可编程"| AUTHENTIK["Authentik<br/>Django、Flow 引擎"]
 
@@ -81,7 +81,7 @@ graph TD
 
 ### 场景一：「我要给内部系统加 SSO，技术栈是 Go/K8s」
 
-**首选 Casdoor**。单二进制部署、原生中文、OIDC + SAML 双协议、内置 Web UI 管理后台。如果你的应用已经用 Go 写，Casdoor 的 Go SDK 集成最自然。如果团队不喜欢 Casdoor 的 UI 风格，备选 **Zitadel**（更现代的 API-first 设计，但无 SAML）。
+**首选 Casdoor**。单二进制部署、原生中文、OIDC + SAML 双协议、内置 Web UI 管理后台。如果你的应用已经用 Go 写，Casdoor 的 Go SDK 与它的技术栈最贴合。如果团队不喜欢 Casdoor 的 UI 风格，备选 **Zitadel**（更现代的 API-first 设计，但无 SAML）。
 
 ### 场景二：「公司有 AD/LDAP，需要对接后统一做 SSO」
 
@@ -101,13 +101,13 @@ graph TD
 
 ### 场景六：「我是高校/科研机构，需要 SAML 联邦 + CAS 协议」
 
-**首选 Apereo CAS**。CAS 协议在高校/学术网络中拥有最广泛的部署基础，Apereo CAS 同时支持 CAS、SAML 2.0、OIDC、OAuth 2.0 四种协议，且有 Apereo 基金会背书。但要注意：CAS 是现存最复杂的 IAM 项目之一（配置项数量不亚于 Keycloak），不建议团队少于 5 人时自建。
+**首选 Apereo CAS**。CAS 协议在高校/学术网络中部署广泛，Apereo CAS 同时支持 CAS、SAML 2.0、OIDC、OAuth 2.0 四种协议，且有 Apereo 基金会背书。但要注意：CAS 的配置项数量不亚于 Keycloak，不建议团队少于 5 人时自建。
 
 ### 如果还是拿不定主意
 
 | 你的情况 | 建议 |
 |---------|------|
-| 不确定选哪个，想先试试 | **Keycloak**——功能最全、文档最多、社区最活跃，即使最终不用，学到的 IAM 概念也都通用 |
+| 不确定选哪个，想先试试 | **Keycloak**——功能覆盖广、文档和社区规模大，即使最终不用，学到的 IAM 概念也都通用 |
 | 要快速出活、中文社区支持 | **Casdoor**——部署 5 分钟、原生中文、中文 Discord/微信群活跃 |
 | 追求技术先进性、API 驱动 | **Zitadel**——事件溯源架构、gRPC API、多租户一等公民 |
 | 已有 Kubernetes 且只做身份联邦 | **Dex**——配置一个 YAML 就是生产就绪的 OIDC Provider |
@@ -153,7 +153,7 @@ docker run -p 5556:5556 dexidp/dex:latest dex serve /etc/dex/config.yaml
 
 ### Q2：Keycloak、Casdoor、Zitadel、Authentik 到底怎么选？
 
-没有最好的 IAM，只有最合适的 IAM。参见上方的[决策树](#选型决策树)和[对比矩阵](#核心产品对比矩阵)。最推荐的验证方法：用 Docker 把两个候选方案都跑起来，分别对接你业务的第一个应用，看谁的配置更直观、文档更清晰、问题更少。花一天时间做 POC，比花一周看文档更有价值。
+没有最好的 IAM，只有最合适的 IAM。参见上方的[决策树](#选型决策树)和[对比矩阵](#核心产品对比矩阵)。推荐的验证方法：用 Docker 把两个候选方案都跑起来，分别对接你业务的第一个应用，看谁的配置更直观、文档更清晰、问题更少。花一天时间做 POC，比花一周看文档更有价值。
 
 ### Q3：我用的开源 IAM 停更了怎么办？
 

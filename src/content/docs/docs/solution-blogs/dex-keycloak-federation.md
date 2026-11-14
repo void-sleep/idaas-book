@@ -15,7 +15,7 @@ sidebar:
 1. **多集群管理**：每个集群的 API Server 需要指向同一个 issuer URL，Keycloak 的 realm 级别 issuer 不够灵活
 2. **上游身份源复用**：Keycloak 本身对接了 AD、LDAP、GitHub 等多个 IdP，Kubernetes 还想同时接受这些来源的用户
 
-这时 Dex 作为 OIDC 代理层，Keycloak 作为上游身份源，是最成熟的生产组合。
+这时 Dex 作为 OIDC 代理层，Keycloak 作为上游身份源，是常见且经过生产验证的组合。
 
 一句话：**Keycloak 管你是谁，Dex 把你的身份转换成 Kubernetes 认识的 OIDC**。
 

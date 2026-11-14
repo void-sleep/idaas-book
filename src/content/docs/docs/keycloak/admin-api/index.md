@@ -138,7 +138,7 @@ curl -s -X PUT \
 
 | 语言 | 推荐库 | 说明 |
 |------|--------|------|
-| Java | `keycloak-admin-client`（官方，JAX-RS） | 与 Keycloak 同源，功能最全 |
+| Java | `keycloak-admin-client`（官方，JAX-RS） | 与 Keycloak 同源，直接跟随官方 API 变更 |
 | Python | `python-keycloak` | 社区维护，覆盖常用 Admin/Token 操作 |
 | Go | `github.com/Nerzal/gocloak` | 社区维护，API 完整 |
 | Node.js | `keycloak-admin`（npm） | 适合 BFF / 自动化脚本 |

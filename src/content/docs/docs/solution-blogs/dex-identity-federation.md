@@ -262,7 +262,7 @@ K8s / Grafana / ArgoCD / Harbor
 为什么 Keycloak 已经支持 OIDC，还要 Dex？
 
 - **轻量级**：Dex 在集群内运行，消耗极低，可以按集群部署
-- **K8s 原生**：Dex 和 K8s API Server 的集成是最成熟的 OIDC 方案之一
+- **K8s 原生**：Dex 和 K8s API Server 的集成是常见且文档充分的 OIDC 方案
 - **简单**：Dex 的配置比 Keycloak 轻量得多，只做一件事
 
 ### 场景 3：Multi-Cluster 统一认证

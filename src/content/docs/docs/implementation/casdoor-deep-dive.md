@@ -99,7 +99,7 @@ Casdoor 支持对接多种第三方身份提供商（IDP），包括 Google、Gi
 
 ### 授权（Casbin 集成）
 
-这是 Casdoor 区别于其他 IAM 的最大特点——它和 Casbin 同出一源，深度集成：
+这是 Casdoor 区别于其他 IAM 的一个特点——它和 Casbin 同出一源，深度集成：
 
 - 支持 ACL、RBAC、ABAC、RESTful 等多种策略模型
 - 授权策略使用 Casbin 的 PERM 模型（Policy、Effect、Request、Matchers），用 `.conf` 文件定义

@@ -245,7 +245,7 @@ Keycloak 暴露 Prometheus metrics（通过 `/metrics` 端点或 Micrometer 集�
 
 ## 14.8 小结
 
-Keycloak 是 IDaaS 开源方案的首选。理解其架构——Realm 隔离、认证流引擎、SPI 扩展机制、缓存架构和集群部署——是从"会用"到"精通"的关键。在生产环境中，重点投入数据库优化、缓存调优、集群高可用和监控。
+Keycloak 是 IDaaS 开源方案里被广泛选用的一个。理解其架构——Realm 隔离、认证流引擎、SPI 扩展机制、缓存架构和集群部署——是从"会用"到"精通"的关键。在生产环境中，重点投入数据库优化、缓存调优、集群高可用和监控。
 
 > 🗺️ **部署实操**：理解架构后，下一步是把 Keycloak 跑在生产环境。参考 [Keycloak 生产环境完整部署路线图](/docs/solution-blogs/keycloak-production-roadmap/)——从零到高可用的八步实践指南，每一步都有对应决策和详细配置。
 

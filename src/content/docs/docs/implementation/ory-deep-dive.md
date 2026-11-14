@@ -96,7 +96,7 @@ flowchart TB
 
 ### Hydra — OAuth 2.1 / OpenID Connect 认证服务器
 
-Hydra 是整个 Ory 生态中 star 最高、最成熟的组件。它的定位非常明确：**只做 OAuth2/OIDC 协议层面的认证和授权，不做用户管理**。
+Hydra 是整个 Ory 生态中 star 数最高、社区使用最广的组件。它的定位非常明确：**只做 OAuth2/OIDC 协议层面的认证和授权，不做用户管理**。
 
 这意味着 Hydra 没有内置的用户数据库、没有登录页面、没有注册流程。它通过 HTTP API 与 Kratos（或任何外部用户系统）集成，来验证"这个用户是谁"。
 

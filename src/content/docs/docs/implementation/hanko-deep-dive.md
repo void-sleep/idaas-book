@@ -227,7 +227,7 @@ Hanko 使用服务器端 Session（不是 JWT 自包含 Token），Session ID �
 
 ## 小结
 
-Hanko 是开源 IAM 生态中的一个独特存在：它不是全栈方案，而是把「让用户抛开密码」这件事做到极致。Passkey-first 的设计、Web Component 一行集成的接入方式、Go 后端的轻量部署，让它在面向消费者的 SaaS 认证场景中很有竞争力。
+Hanko 在开源 IAM 生态里定位很窄：它不是全栈方案，只专注「让用户抛开密码」这一件事。Passkey-first 的设计、Web Component 一行集成的接入方式、Go 后端的轻量部署，让它在面向消费者的 SaaS 认证场景中很有竞争力。
 
 如果你的项目需要快速搭建用户认证、不想维护密码逻辑、也暂时不需要企业级 IAM 能力（LDAP、SCIM、细粒度 RBAC），Hanko 值得评估。如果你的需求更重——企业 SSO、身份联邦、多协议授权——Keycloak 或 Authentik 是更稳妥的选择。
 

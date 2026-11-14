@@ -34,7 +34,7 @@ sidebar:
 **许可证**：Apache 2.0
 
 **核心优势**：
-- 功能最全面的开源 IAM
+- 覆盖面广：OIDC / SAML 2.0 / OAuth 2.0 之外还有 LDAP 联邦、细粒度授权和管理控制台
 - Red Hat 背书，社区活跃、长期演进
 - 丰富的协议支持（OIDC、SAML 2.0、OAuth 2.0）
 - 活跃的社区和生态
@@ -206,7 +206,7 @@ Janssen 是 Linux Foundation 旗下的开源数字身份基础设施项目，202
 **许可证**：核心开源（含商业许可）
 
 **核心优势**：
-- 极致的开发者体验：前端 SDK 提供 `<SignInAndUp />` 等开箱即用组件，后端 SDK 封装所有协议细节
+- 开箱即用的开发者体验：前端 SDK 提供 `<SignInAndUp />` 等开箱即用组件，后端 SDK 封装所有协议细节
 - 三层架构（Frontend SDK → Backend SDK → Core），每层可独立替换
 - 内置会话管理：Access + Refresh Token 自动刷新、防 CSRF/XSS、Token 撤销
 - 多租户原生支持（v9.0+），适配 SaaS 场景
@@ -268,10 +268,10 @@ Janssen 是 Linux Foundation 旗下的开源数字身份基础设施项目，202
 
 ### Okta
 
-IDaaS 品类的开创者和市场领导者。
+IDaaS 品类的早期玩家之一。
 
 **优势**：
-- 最成熟的 IDaaS 产品
+- 商业化时间早（2009 年起），产品线成熟
 - OIN 集成目录含数千应用预置集成
 - 强大的自适应 MFA
 - 企业级 SLA（99.99%）

@@ -120,7 +120,7 @@ OpenBao 中几乎所有动态生成的密钥都有租约。租约到期后密钥
 
 ### 场景一：OpenBao + Keycloak OIDC 认证
 
-这是最自然的集成方式——Keycloak 做人的身份认证，OpenBao 通过 JWT Auth Method 接受 Keycloak 签发的 ID Token，实现「人→OpenBao」的认证链路：
+这是一种自然的集成方式——Keycloak 做人的身份认证，OpenBao 通过 JWT Auth Method 接受 Keycloak 签发的 ID Token，实现「人→OpenBao」的认证链路：
 
 ```mermaid
 sequenceDiagram

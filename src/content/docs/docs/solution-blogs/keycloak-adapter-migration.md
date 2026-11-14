@@ -358,7 +358,7 @@ curl -s https://kc.example.com/realms/myrealm/.well-known/openid-configuration |
 
 - [Keycloak Securing Applications Guide](https://www.keycloak.org/docs/latest/securing_apps/) — 官方应用安全指南，包含标准 OIDC 库推荐
 - [Spring Security OAuth2 Client](https://docs.spring.io/spring-security/reference/servlet/oauth2/client/index.html) — Spring Security 的 OAuth2 客户端文档
-- [openid-client (Node.js)](https://github.com/panva/node-openid-client) — Node.js 生态最成熟的 OIDC 依赖方库
+- [openid-client (Node.js)](https://github.com/panva/node-openid-client) — Node.js 生态使用广泛的 OIDC 依赖方库
 - [Authlib (Python)](https://docs.authlib.org/en/latest/client/frameworks.html) — Python Flask/Django 的 OAuth/OIDC 客户端库
 - [Keycloak 入门指南](/docs/keycloak/getting-started/) — 如果还没开始用 Keycloak，从这里起步
 - [OAuth 2.0 授权码与 PKCE 流程](/docs/protocols/oauth2-authorization-code-pkce/) — 理解迁移后的底层安全机制
