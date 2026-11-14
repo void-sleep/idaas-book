@@ -20,7 +20,7 @@ Read online: [idaas.xlabs.club](https://idaas.xlabs.club)
 
 | Section | Covers |
 |---------|--------|
-| [Guide](https://idaas.xlabs.club/docs/guides/) | Paths and conventions |
+| [Guide](https://idaas.xlabs.club/docs/guides/introduction/) | Paths and conventions |
 | [Foundations](https://idaas.xlabs.club/docs/fundamentals/) | IDaaS / IAM, AuthN vs AuthZ, lifecycle |
 | [Protocols](https://idaas.xlabs.club/docs/protocols/) | OAuth 2.0 / 2.1, OIDC, SAML, LDAP, SCIM, JWT |
 | [Capabilities](https://idaas.xlabs.club/docs/core-capabilities/) | SSO, MFA, federation, audit |

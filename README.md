@@ -20,7 +20,7 @@
 
 | 章节 | 内容 |
 |------|------|
-| [阅读指南](https://idaas.xlabs.club/docs/guides/) | 路线与约定 |
+| [阅读指南](https://idaas.xlabs.club/docs/guides/introduction/) | 路线与约定 |
 | [基础](https://idaas.xlabs.club/docs/fundamentals/) | IDaaS / IAM、AuthN vs AuthZ、生命周期 |
 | [协议与标准](https://idaas.xlabs.club/docs/protocols/) | OAuth 2.0 / 2.1、OIDC、SAML、LDAP、SCIM、JWT |
 | [核心能力](https://idaas.xlabs.club/docs/core-capabilities/) | SSO、MFA、联邦、审计 |
