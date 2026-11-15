@@ -15,9 +15,9 @@ dist
 .vscode/
 
 # Installed skills (external dependencies)
-.agents/skills/
-.claude/skills/
-agent/skills/
+.agents/
+.claude/
+agent/
 skills-lock.json
 
 .env
