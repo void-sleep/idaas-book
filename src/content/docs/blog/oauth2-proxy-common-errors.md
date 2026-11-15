@@ -3,8 +3,7 @@ title: "IAM 网关 oauth2-proxy 常见错误排错"
 description: "IAM 网关 oauth2-proxy 集成 Keycloak 的 12 个高频错误排错：CSRF Cookie、expected audience、redirect loop、invalid_token 与 Nginx 401。"
 date: 2026-07-13T00:00:00+08:00
 lastmod: 2026-09-07T21:00:00+08:00
-categories: ["Keycloak", "oauth2-proxy"]
-tags: ["oauth2-proxy", "keycloak", "csrf", "audience", "nginx-ingress", "troubleshooting"]
+tags: ["keycloak", "oauth2-proxy", "auth"]
 sidebar:
   order: 31
 ---

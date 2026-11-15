@@ -3,8 +3,7 @@ title: "Keycloak Liquibase 与 MySQL 组复制冲突排查与解决"
 description: "Keycloak 在 MySQL Group Replication 下 Liquibase 数据库迁移失败的排查与解决方案：锁表与迁移串行化"
 date: 2024-04-01T00:00:00+08:00
 lastmod: 2024-04-01T00:00:00+08:00
-categories: ["Keycloak", "MySQL"]
-tags: ["keycloak", "liquibase", "mysql", "group-replication", "database-migration", "troubleshooting"]
+tags: ["keycloak", "database"]
 sidebar:
   order: 41
 ---

@@ -3,8 +3,7 @@ title: "IAM 会话超时排错：Keycloak SSO/Client Session 约束"
 description: "IAM 会话超时排错实战：Keycloak SSO Session Idle/Max 与 Client Session 的取值优先级、Refresh Token 实际有效期为什么被 SSO Session Max 夹住、26.5 起的超时校验报错、最小配置与验证命令。"
 date: 2026-09-13T00:00:00+08:00
 lastmod: 2026-09-13T22:00:00+08:00
-categories: ["Keycloak"]
-tags: ["keycloak", "session-timeout", "sso-session", "refresh-token", "troubleshooting"]
+tags: ["keycloak", "auth"]
 sidebar:
   order: 33
 ---

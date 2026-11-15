@@ -3,8 +3,7 @@ title: "IAM 单点登出排错：Keycloak 登出不彻底的原因与修复"
 description: "IAM 单点登出排错实战：Keycloak RP-Initiated Logout 与 Back-Channel Logout 令牌配置、front/back channel 互斥开关、oauth2-proxy sign_out 只清自身 Cookie、400 报错与确认页卡住的根因。"
 date: 2026-09-12T00:00:00+08:00
 lastmod: 2026-09-12T23:00:00+08:00
-categories: ["Keycloak"]
-tags: ["keycloak", "single-logout", "back-channel-logout", "rp-initiated-logout", "troubleshooting"]
+tags: ["keycloak", "oauth2-proxy", "auth"]
 sidebar:
   order: 32
 ---

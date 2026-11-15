@@ -5,11 +5,24 @@
 ## 仓库约定
 
 - 正文：`src/content/docs/`。frontmatter 保留 `title`、`description`、`sidebar.order`。侧栏由 `astro.config.mjs` 的 `sidebar` 按目录生成。
+- 博客 frontmatter（`src/content/docs/blog/`）：`title`、`description`、`date`、`lastmod`、`tags`。不写 `categories`——starlight-blog 不渲染它，RSS 也只取 `tags`，写了等于白写且容易出现大小写不一致。
 - 静态源文件：`public/`（favicon 等原样拷贝到站点根）。Logo 等需处理的资源：`src/assets/`。
 - 站内链接：普通 Markdown 路径，如 `[标题](/docs/fundamentals/xxx/)`。
 - 页面搬家默认不加 redirects，旧地址 404。
 - 只改任务所需文件。不顺手改无关章节。
 - 中间过程性内容不入库如：讨论、迁移校验脚本。
+- 博客标签（`src/content/docs/blog/` 的 `tags`）只能用下方固定词表，每篇取「产品 + 1–2 个问题域」，最多 3 个；不要在标签里堆关键词。
+
+  | 轴 | 词表 |
+  | --- | --- |
+  | 产品 | `keycloak` / `oauth2-proxy` / `openbao` / `active-directory` |
+  | 问题域 | `auth` / `database` / `kubernetes` |
+
+  **产品标签按文章主题判定，不按提及判定。** 只有文章确实在讲这个产品（排障对象、配置主体、集成方案的一方）才打；只是顺带提一句、或作为另一篇文章的前置条件出现的，不打。判断标准：去掉该产品名后文章主题是否仍成立——仍成立就不打这个标签。
+
+  **问题域标签描述文章回答的问题类型**，与产品无关。`auth` 是宽口径：登录、登出、会话、OIDC、反向代理下的认证链路都归它，不再拆分。
+
+  不属于这两轴的词（具体报错串、单个配置项、单个机制名、厂商特性名如 Traefik/ForwardAuth/JDBC）不建标签，交给标题和 `description`。新增产品要先在 issue 或讨论里确认，不要临时造词。大小写一律小写 kebab-case，同义词只保留一个。
 
 ## 写作风格
 

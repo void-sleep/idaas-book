@@ -3,8 +3,7 @@ title: "Keycloak HTTPS Required 错误与反向代理排错指南"
 description: "Keycloak 报 HTTPS required 或 Invalid redirect_uri 的排查：核对 KC_PROXY_HEADERS、KC_HOSTNAME 与反向代理 X-Forwarded-* 头。"
 date: 2024-04-01T00:00:00+08:00
 lastmod: 2024-04-01T00:00:00+08:00
-categories: ["Keycloak"]
-tags: ["keycloak", "https", "reverse-proxy", "proxy-headers", "redirect-uri", "troubleshooting"]
+tags: ["keycloak", "auth"]
 sidebar:
   order: 40
 ---

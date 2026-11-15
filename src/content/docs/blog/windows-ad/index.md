@@ -3,8 +3,7 @@ title: "Windows Server AD 域服务安装与 LDAPS 启用完整指南"
 description: "Windows Server AD 域服务从零安装：添加域服务角色、配置新林域控、用户与组管理、LDAPS 证书配置，适用于 Keycloak 对接前的测试环境搭建"
 date: 2020-12-14T23:54:37+08:00
 lastmod: 2020-12-14T23:54:37+08:00
-categories: ["Active Directory"]
-tags: ["windows-ad", "active-directory", "ldaps", "keycloak"]
+tags: ["active-directory"]
 ---
 
 

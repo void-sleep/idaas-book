@@ -3,8 +3,7 @@ title: "Keycloak + PgBouncer 排错：prepared statement does not exist 与通�
 description: "Keycloak 接 PgBouncer 事务池后报 prepared statement S_1 does not exist 的根因，以及用 KC_DB_URL_PROPERTIES 注入 prepareThreshold=0 的通用解法"
 date: 2026-07-17T00:00:00+08:00
 lastmod: 2026-07-17T00:00:00+08:00
-categories: ["Keycloak", "PostgreSQL"]
-tags: ["Keycloak", "PgBouncer", "PostgreSQL", "JDBC", "连接池", "troubleshooting"]
+tags: ["keycloak", "database"]
 sidebar:
   order: 20
 ---

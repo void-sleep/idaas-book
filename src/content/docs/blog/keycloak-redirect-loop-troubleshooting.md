@@ -3,8 +3,7 @@ title: "IAM 网关 Keycloak 重定向循环与 401 排错"
 description: "IAM 网关中 Keycloak 登录循环与 401 的诊断流程，覆盖 Cookie、反向代理 Header、OIDC 回调、TLS 终结和 SameSite 排查。"
 date: 2026-07-08T00:00:00+08:00
 lastmod: 2026-08-12T22:01:48+08:00
-categories: ["Keycloak", "oauth2-proxy"]
-tags: ["keycloak", "redirect-loop", "401", "cookie", "oidc", "troubleshooting"]
+tags: ["keycloak", "oauth2-proxy", "auth"]
 sidebar:
   order: 30
 ---

@@ -3,8 +3,7 @@ title: "IAM 网关：Keycloak + oauth2-proxy 保护内部应用"
 description: "IAM 网关使用 Keycloak 与 oauth2-proxy，通过 NGINX Ingress 或 Traefik ForwardAuth 为内部应用添加 OIDC 认证，覆盖可信代理、Cookie 与回滚。"
 date: 2026-07-04T00:00:00+08:00
 lastmod: 2026-07-04T00:00:00+08:00
-categories: ["Keycloak", "OAuth2 Proxy"]
-tags: ["Keycloak", "oauth2-proxy", "OIDC", "ingress-nginx", "Traefik", "ForwardAuth", "SSO"]
+tags: ["keycloak", "oauth2-proxy", "auth"]
 sidebar:
   order: 10
 ---
