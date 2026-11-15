@@ -12,6 +12,7 @@ dist
 /resources/
 .worktrees/
 .teamai/
+.vscode/
 
 # Installed skills (external dependencies)
 .agents/skills/

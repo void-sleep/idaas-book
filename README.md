@@ -42,7 +42,7 @@
 
 ## 构建
 
-站点随 `main` 部署。需要 Node.js 26 与 pnpm。[Astro](https://astro.build/) + [Starlight](https://starlight.astro.build/)。
+站点随 `main` 部署。需要 Node.js 26 与 pnpm。使用 [Astro](https://astro.build/) + [Starlight](https://starlight.astro.build/) 开发。
 
 ```text
 .
@@ -65,8 +65,6 @@ pnpm install
 pnpm run dev      # http://localhost:4321
 pnpm run build    # dist/
 ```
-
-站内链接用 Markdown 路径，例如 `[标题](/docs/fundamentals/xxx/)`。
 
 ## 贡献
 
