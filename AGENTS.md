@@ -13,8 +13,7 @@
 
 ## 写作风格
 
-- 写/改技术文档或工程博客前，先读取并遵循项目 skill `tech-docs-blog-writing`（`npx skills add https://github.com/void-sleep/agent-skills --skill tech-docs-blog-writing`）
-- 科技风简洁不啰嗦，无中间过程性表示，无关废话一律禁用
+- 读取并遵循项目 skill `tech-docs-blog-writing`（`npx skills add https://github.com/void-sleep/agent-skills --skill tech-docs-blog-writing`）
 
 ## Git 提交规范
 
